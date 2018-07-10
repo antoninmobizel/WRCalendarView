@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
                         '(https://github.com/wayfinders/WRCalendarView/blob/master/Example/Screenshots/1.gif']
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'wayfinder' => 'wayfinder12@gmail.com' }
-  s.source           = { :git => 'https://github.com/wayfinders/WRCalendarView.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/robelsh/WRCalendarView.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
