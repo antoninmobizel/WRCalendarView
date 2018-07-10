@@ -28,7 +28,7 @@ public class WRWeekView: UIView {
     var loading = false
     var isFirst = true
     var daysToShow: Int = 0
-    var daysToShowOnScreen: Int = 0
+    var daysToShowOnScreen: Int = 1
     var calendarDate: Date!
     var events = [WREvent]()
     var eventBySection = [String: [WREvent]]()
@@ -162,6 +162,10 @@ public class WRWeekView: UIView {
         flowLayout.invalidateLayoutCache()
         collectionView.reloadData()
     }
+    
+    public func setDaysToShowOnScreen(_ days: Int) {
+        self.daysToShowOnScreen = days
+    }
 
     // MARK: - private actions
     //  Get date from point
@@ -200,11 +204,9 @@ public class WRWeekView: UIView {
     fileprivate func updateView(_ animated: Bool = false) {
         switch calendarType {
         case .week:
-            daysToShowOnScreen = 7
             let weekComponent = Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: calendarDate)
             startDate = Calendar.current.date(from: weekComponent)
         case .day:
-            daysToShowOnScreen = 1
             startDate = calendarDate
         }
 
