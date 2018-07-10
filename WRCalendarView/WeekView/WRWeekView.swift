@@ -28,7 +28,7 @@ public class WRWeekView: UIView {
     var loading = false
     var isFirst = true
     var daysToShow: Int = 0
-    var daysToShowOnScreen: Int = 1
+    public var daysToShowOnScreen: Int = 1
     var calendarDate: Date!
     var events = [WREvent]()
     var eventBySection = [String: [WREvent]]()
@@ -161,10 +161,6 @@ public class WRWeekView: UIView {
         }
         flowLayout.invalidateLayoutCache()
         collectionView.reloadData()
-    }
-    
-    public func setDaysToShowOnScreen(_ days: Int) {
-        self.daysToShowOnScreen = days
     }
 
     // MARK: - private actions
