@@ -46,6 +46,7 @@ class WREventCell: UICollectionViewCell {
             if let event = event {
                 titleLabel.text = event.title
                 backgroundColorHighlighted(isSelected)
+                updateColors()
             }
         }
     }
