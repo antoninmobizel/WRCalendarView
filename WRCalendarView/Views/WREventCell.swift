@@ -11,7 +11,7 @@ import UIKit
 class WREventCell: UICollectionViewCell {
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -56,7 +56,7 @@ class WREventCell: UICollectionViewCell {
     }
     
     func backgroundColorHighlighted(_ selected: Bool) -> UIColor {
-        return selected ? UIColor(hexString: "35b1f1")! : UIColor(hexString: "35b1f1")!.withAlphaComponent(0.1)
+        return selected ? event.color! : event.color!.withAlphaComponent(0.1)
     }
     
     func textColorHighlighted(_ selected: Bool) -> UIColor {
