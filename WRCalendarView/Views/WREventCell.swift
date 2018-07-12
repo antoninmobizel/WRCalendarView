@@ -56,7 +56,7 @@ class WREventCell: UICollectionViewCell {
     }
     
     func backgroundColorHighlighted(_ selected: Bool) -> UIColor {
-        return selected ? event.color! : event.color!.withAlphaComponent(0.1)
+        return selected ? event!.color! : event!.color!.withAlphaComponent(0.1)
     }
     
     func textColorHighlighted(_ selected: Bool) -> UIColor {
