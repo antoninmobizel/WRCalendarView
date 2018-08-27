@@ -23,7 +23,7 @@ public class WRWeekView: UIView {
     var flowLayout: WRWeekViewFlowLayout!
     var initDate: Date!
     var startDate: Date!
-    public var hour: Date: Date()
+    public var hour: Date = Date()
     var initialContentOffset = CGPoint.zero
     var currentPage: Int!
     var loading = false
