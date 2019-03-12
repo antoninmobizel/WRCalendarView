@@ -50,7 +50,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     var minuteTimer: Timer?
-   
+    
     // Attributes
     var cachedDayDateComponents = Dictionary<Int, DateComponents>()
     var cachedCurrentTimeComponents = Dictionary<Int, DateComponents>()
@@ -97,10 +97,10 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     
     func initializeMinuteTick() {
         minuteTimer = Timer(fireAt: Date() + 1.minutes, interval: TimeInterval(60), target: self, selector: #selector(minuteTick), userInfo: nil, repeats: true)
-        RunLoop.current.add(minuteTimer!, forMode: .defaultRunLoopMode)
+        RunLoop.current.add(minuteTimer!, forMode: RunLoop.Mode.default)
     }
-
-    func minuteTick() {
+    
+    @objc func minuteTick() {
         cachedCurrentTimeComponents.removeAll()
         invalidateLayout()
     }
@@ -153,7 +153,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             allAttributes.append(contentsOf: itemAttributes.values)
         }
     }
-
+    
     func prepareHorizontalTileSectionLayoutForSections(_ sectionIndexes: NSIndexSet) {
         guard collectionView!.numberOfSections != 0 else { return }
         
@@ -167,7 +167,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         let calendarGridMinX = rowHeaderWidth + contentsMargin.left
         let calendarGridMinY = columnHeaderHeight + contentsMargin.top
         let calendarGridWidth = collectionViewContentSize.width - rowHeaderWidth - contentsMargin.left - contentsMargin.right
-
+        
         let calendarContentMinX = rowHeaderWidth + contentsMargin.left + sectionMargin.left
         let calendarContentMinY = columnHeaderHeight + contentsMargin.top + sectionMargin.top
         // row header
@@ -181,7 +181,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         attributes.frame = CGRect(x: rowHeaderMinX, y: collectionView!.contentOffset.y,
                                   width: rowHeaderWidth, height: collectionView!.frame.height)
         attributes.zIndex = zIndexForElementKind(DecorationViewKinds.rowHeaderBackground)
-
+        
         //current time indicator
         (attributes, currentTimeIndicatorAttributes) =
             layoutAttributesForDecorationView(at: IndexPath(row: 0, section: 0),
@@ -193,7 +193,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         let currentTimeIndicatorMinY: CGFloat = timeY - nearbyint(currentTimeIndicatorSize.height / 2.0)
         let currentTimeIndicatorMinX: CGFloat = (max(collectionView!.contentOffset.x, 0.0) + (rowHeaderWidth - currentTimeIndicatorSize.width))
         attributes.frame = CGRect(origin: CGPoint(x: currentTimeIndicatorMinX, y: currentTimeIndicatorMinY),
-                                                      size: currentTimeIndicatorSize)
+                                  size: currentTimeIndicatorSize)
         attributes.zIndex = zIndexForElementKind(DecorationViewKinds.currentTimeIndicator)
         
         //current time gridline
@@ -227,7 +227,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         attributes.frame = CGRect(origin: collectionView!.contentOffset,
                                   size: CGSize.init(width: rowHeaderWidth, height: columnHeaderHeight))
         attributes.zIndex = zIndexForElementKind(DecorationViewKinds.cornerHeader)
-
+        
         // row header
         for rowHeaderIndex in 0...23 {
             (attributes, rowHeaderAttributes) =
@@ -244,7 +244,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         
         // Column Header
         let columnHeaderMinY = fmax(collectionView!.contentOffset.y, 0.0)
-
+        
         sectionIndexes.enumerate(_:) { (section, stop) in
             let sectionMinX = calendarContentMinX + sectionWidth * CGFloat(section)
             
@@ -352,7 +352,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             let horizontalGridlineMinX = fmax(horizontalGridlineXOffset, collectionView!.contentOffset.x + horizontalGridlineXOffset)
             let horizontalGridlineMinY = nearbyint(calendarStartY + (hourHeight * CGFloat(hour))) - (gridThickness / 2.0)
             let horizontalGridlineWidth = fmin(calendarGridWidth, collectionView!.frame.width)
-
+            
             attributes.frame = CGRect(x: horizontalGridlineMinX,
                                       y: horizontalGridlineMinY,
                                       width: horizontalGridlineWidth,
@@ -380,8 +380,8 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             let horizontalGridlineIndexPath = IndexPath(item: _gridlineIndex, section: 0)
             
             (attributes, horizontalGridlineAttributes) = layoutAttributesForDecorationView(at: horizontalGridlineIndexPath,
-                                                                                          ofKind: DecorationViewKinds.horizontalGridline,
-                                                                                          withItemCache: horizontalGridlineAttributes)
+                                                                                           ofKind: DecorationViewKinds.horizontalGridline,
+                                                                                           withItemCache: horizontalGridlineAttributes)
             let horizontalGridlineMinY = nearbyint(calendarStartY + (divisionHeight * CGFloat(division)) - (gridThickness / 2.0))
             attributes.frame = CGRect(x: calendarStartX, y: horizontalGridlineMinY, width: gridlineWidth, height: gridThickness)
             attributes.alpha = 0.3
@@ -563,7 +563,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
                         dividedAttributes.append(divisionAttributes)
                         adjustedAttributes.insert(divisionAttributes)
                     }
-                 }
+                }
             }
         }
     }
@@ -655,7 +655,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Scroll
     func scrollCollectionViewToCurrentTime(to date: Date = Date()) {
         let y = max(0, min(CGFloat(date.hour) * hourHeight - collectionView!.frame.height / 2 + columnHeaderHeight,
-                    collectionView!.contentSize.height - collectionView!.frame.height))
+                           collectionView!.contentSize.height - collectionView!.frame.height))
         //didScroll에서 horizontal, vertical scroll이 동시에 되는 것을 막고 있음
         //임시로 처음 current time찾아갈 때만 delegate를 무효화하도록 함
         //더 나은 방법 찾을때까지 임시 유지
