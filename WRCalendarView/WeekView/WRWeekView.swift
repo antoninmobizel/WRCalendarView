@@ -379,7 +379,7 @@ extension WRWeekView: UICollectionViewDelegate, UICollectionViewDataSource {
         let assistedScrollPosition = (scrollView.contentOffset.x + assistanceOffset) / pageWidth
         let currentPage = Int(round(assistedScrollPosition)) + 1
         
-        setCurrentPage(currentPage, true)
+        setCurrentPage(currentPage, animated: true)
     }
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
