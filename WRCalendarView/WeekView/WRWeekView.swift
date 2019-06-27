@@ -10,7 +10,7 @@ import UIKit
 import DateToolsSwift
 
 public protocol WRWeekViewDelegate: NSObjectProtocol  {
-    func view(startDate: Date, interval: Int)
+    func view(startDate: Date, interval: Int, userDidScroll: Bool)
     func tap(date: Date)
     func selectEvent(_ event: WREvent)
 }
@@ -246,7 +246,7 @@ public class WRWeekView: UIView {
         }
     }
     
-    fileprivate func setCurrentPage(_ _currentPage: Int, animated: Bool = true) {
+    fileprivate func setCurrentPage(_ _currentPage: Int, animated: Bool = true, userDidScroll: Bool = false) {
         currentPage = _currentPage
         let pageWidth = CGFloat(daysToShowOnScreen) * flowLayout.sectionWidth
         if currentPage < 1 { currentPage = 1 }
@@ -256,7 +256,8 @@ public class WRWeekView: UIView {
                                         animated: animated)
         
         delegate?.view(startDate: flowLayout.dateForColumnHeader(at: IndexPath(row: 0, section: (currentPage - 1) * daysToShowOnScreen)),
-                       interval: daysToShowOnScreen)
+                       interval: daysToShowOnScreen,
+                       userDidScroll: userDidScroll)
     }
     
     // directionalLockEnabled 이 제대로 작동안해서 직접 막아야 함
@@ -378,7 +379,7 @@ extension WRWeekView: UICollectionViewDelegate, UICollectionViewDataSource {
         let assistedScrollPosition = (scrollView.contentOffset.x + assistanceOffset) / pageWidth
         let currentPage = Int(round(assistedScrollPosition)) + 1
         
-        setCurrentPage(currentPage)
+        setCurrentPage(currentPage, true)
     }
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
