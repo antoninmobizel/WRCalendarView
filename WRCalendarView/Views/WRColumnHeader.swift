@@ -24,9 +24,10 @@ class WRColumnHeader: UICollectionReusableView {
         didSet {
             if let date = date {
                 let weekday = calendar.component(.weekday, from: date) - 1
+                let month = calendar.component(.month, from: date) - 1
                 
                 dayLbl.text = String(calendar.component(.day, from: date))
-                weekdayLbl.text = dateFormatter.shortWeekdaySymbols[weekday].uppercased()
+                weekdayLbl.text = dateFormatter.shortMonthSymbols[month] + dateFormatter.shortWeekdaySymbols[weekday].uppercased()
                 weekdayLbl.textColor = UIColor(hexString: "7ED321")
                 
                 if date.isSameDay(date: Date()) {
