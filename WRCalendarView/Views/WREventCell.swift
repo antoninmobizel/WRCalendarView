@@ -20,7 +20,6 @@ class WREventCell: UICollectionViewCell {
         layer.shadowRadius = 5
         layer.shadowOpacity = 0
         
-        borderView.backgroundColor = borderColor()
         titleLabel.textColor = textColorHighlighted()
 
         updateColors()
@@ -37,6 +36,7 @@ class WREventCell: UICollectionViewCell {
     
     private func updateColors() {
         contentView.backgroundColor = backgroundColorHighlighted()
+        borderView.backgroundColor = borderColor()
     }
     
     private func backgroundColorHighlighted() -> UIColor {
@@ -48,7 +48,7 @@ class WREventCell: UICollectionViewCell {
     }
     
     private func textColorHighlighted() -> UIColor {
-        return UIColor(hexString: "21729c")!
+        return UIColor(hexString: "03112e")!
     }
     
     private func borderColor() -> UIColor {
