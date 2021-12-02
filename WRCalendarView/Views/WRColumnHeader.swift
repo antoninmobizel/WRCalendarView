@@ -28,10 +28,10 @@ class WRColumnHeader: UICollectionReusableView {
                 
                 dayLbl.text = String(calendar.component(.day, from: date))
                 weekdayLbl.text = dateFormatter.shortMonthSymbols[month] + " " + dateFormatter.shortWeekdaySymbols[weekday].uppercased()
-                weekdayLbl.textColor = UIColor(hexString: "7ED321")
+                weekdayLbl.textColor = UIColor(hexString: "3452ff")
                 
                 if date.isSameDay(date: Date()) {
-                    dayLbl.textColor = UIColor(hexString: "7ED321")
+                    dayLbl.textColor = UIColor(hexString: "3452ff")
                     backgroundColor = UIColor(hexString: "f5f8fd")
                 } else {
                     dayLbl.textColor = UIColor(hexString: "aaaaaa")
